@@ -1,36 +1,17 @@
 #!/usr/bin/python3
 
 def pascal_triangle(n):
-    """returns a list of lists of integers representing the Pascal’s triangle
-    of n
-
-    Args:
-        n (n): size of triangle
-
-    Returns:
-        list: returns empty list if n <= 0 or list of lists of integers
-        representing Pascal's triangle of n otherwise
-    """
     if n <= 0:
         return []
 
-    triangle, buffer_list = [], []
-    for x in range(n):
-        if x == 0:
-            triangle.append([1])
-            continue
-        if x == 1:
-            triangle.append([1, 1])
-            continue
-
-        sum_list = triangle[-1]
-        for i in range(len(sum_list) + 1):
-            if i in [0, len(sum_list)]:
-                buffer_list.append(1)
-                continue
-            buffer_list.append(sum_list[i] + sum_list[i - 1])
-
-        triangle.append(buffer_list)
-        buffer_list = []
+    triangle = []
+    for i in range(n):
+        row = [1]  # The first element in each row is always 1
+        if triangle:
+            prev_row = triangle[-1]  # Get the previous row
+            for j in range(1, i):
+                row.append(prev_row[j - 1] + prev_row[j])  # Calculate the middle elements
+            row.append(1)  # The last element in each row is always 1
+        triangle.append(row)
 
     return triangle
